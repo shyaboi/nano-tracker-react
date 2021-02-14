@@ -7,7 +7,7 @@ import { Container, Row, Col } from 'reactstrap';
 
 function App() {
   return (
-    <Container>
+    <Container fluid>
       <Row>
         <Col>
        <HashLine  />

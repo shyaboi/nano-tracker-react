@@ -2,18 +2,23 @@ import { Hash } from "crypto";
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Button } from "reactstrap";
 import { Progress } from "reactstrap";
-import {LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
+import {ResponsiveContainer, ComposedChart, LineChart,Area, Line, CartesianGrid, XAxis, YAxis, Tooltip, Legend } from 'recharts';
 let gData = [
-    {name:"b",uv:200},{name:"b",uv:200},{name:"b",uv:200},{name:"b",uv:200},{name:"b",uv:200},{name:"b",uv:200},{name:"b",uv:200},{name:"b",uv:200},];
-
-let Updater
+    {name:"b",uv:200, pv:200},{name:"b",uv:200, pv:200},{name:"b",uv:200, pv:200},{name:"b",uv:200, pv:200},{name:"b",uv:200, pv:200},{name:"b",uv:200, pv:200},{name:"b",uv:200, pv:200},{name:"b",uv:200, pv:200},];
+    
+    let Updater
     const HashLine = () =>{ 
         const [GgData, setGData] = useState([])
         const [updateInterval, setUpdateInterval] = useState(0)
+        const [windowHeight, setWindowHeight] = useState(50)
         
+        function handleResize() {
+            setWindowHeight(window.innerHeight -50)}
         useEffect(() => {
             setGData(gData)
-})
+            handleResize()
+        })
+            window.addEventListener('resize', handleResize)
 
 const fetchy = async (address) => {
     let res = await fetch(
@@ -33,7 +38,7 @@ const beef = (b)=> {
             let bal =await pData.balance
             let hashTotal =await pData.hashrate
             console.log(hashTotal)
-            gData.push({name:"b",uv:hashTotal})
+            gData.push({name:hashTotal,uv:hashTotal,pv:150,amt:2222})
             let dataG = gData.map(beef)   
             if(dataG.length>8){
                 gData.shift()
@@ -42,10 +47,14 @@ const beef = (b)=> {
             setGData(dataG)
         });
     }
+
+
+
+
     let startTick=() =>{
         if(!updateInterval){
             console.log('clicked')
-            Updater = setInterval(updateLine,3000)
+            Updater = setInterval(updateLine,1000)
             setUpdateInterval(1)
         }
 
@@ -58,18 +67,21 @@ let stopTick=() =>{
         clearInterval(Updater)
         setUpdateInterval(0)
     }
-}    
-    
+} 
     
     return(
-        <Container>
-        <LineChart width={900} height={500} data={GgData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
-        <Line type="monotone" dataKey="uv" stroke="#8884d8" />
+<Container fluid>       
+        <ResponsiveContainer  width="100%" height={windowHeight} >
+        <ComposedChart  data={GgData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+        <Line type="monotone" dataKey="uv"  stroke="#8884d8" fill="#82ca9d"/>
+        <Line type="monotone" dataKey="pv"  stroke="#8884d8" />
         <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
         <XAxis dataKey="name" />
         <YAxis />
         <Tooltip />
-      </LineChart>
+      </ComposedChart>
+</ResponsiveContainer>
+        <Legend />
 <Button onClick={startTick}>Start Updates</Button>
 <Button onClick={stopTick}>Stop Updates</Button>
 </Container>

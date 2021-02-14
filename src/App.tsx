@@ -2,14 +2,18 @@ import React from 'react';
 // import logo from './logo.svg';
 import './App.css';
 import HashLine from "./Components/HashLin/HashLine"
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Container, Row, Col } from 'reactstrap';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
+    <Container fluid>
+      <Row>
+        <Col>
        <HashLine  />
-      </header>
-    </div>
+       </Col>
+       </Row>
+       </Container>
   );
 }
 

@@ -1,7 +1,8 @@
 import React, {useEffect , useState } from 'react';
 import { Doughnut, Line } from 'react-chartjs-2';
 
-const dataa = {
+
+const dta = {
     labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
     datasets: [
       {
@@ -26,15 +27,13 @@ function HashLine (){
       var chartReference = React.createRef();
   
       useEffect(() => {
-          setData(dataa)
+          setData(dta)
       setChart(chartReference); // returns a Chart.js instance reference
       },[])
 
 
       return (
-      <div>
       <Line ref={chartReference} data={data}  />
-      </div>
       )
       
   }

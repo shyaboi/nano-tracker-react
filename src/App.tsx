@@ -1,12 +1,13 @@
 import React from 'react';
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
-import HashLine from "./Components/HashLine/HashLine"
+import HashLine from "./Components/HashLin/HashLine"
+
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-       <HashLine />
+       <HashLine  />
       </header>
     </div>
   );

@@ -1,27 +1,27 @@
 {
   "files": {
-    "main.css": "/static/css/main.93fa5a3d.chunk.css",
-    "main.js": "/static/js/main.07397824.chunk.js",
-    "main.js.map": "/static/js/main.07397824.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.7482b745.js",
-    "runtime-main.js.map": "/static/js/runtime-main.7482b745.js.map",
-    "static/css/2.150d169a.chunk.css": "/static/css/2.150d169a.chunk.css",
-    "static/js/2.13698548.chunk.js": "/static/js/2.13698548.chunk.js",
-    "static/js/2.13698548.chunk.js.map": "/static/js/2.13698548.chunk.js.map",
-    "static/js/3.bbdba5cb.chunk.js": "/static/js/3.bbdba5cb.chunk.js",
-    "static/js/3.bbdba5cb.chunk.js.map": "/static/js/3.bbdba5cb.chunk.js.map",
-    "index.html": "/index.html",
-    "service-worker.js": "/service-worker.js",
-    "service-worker.js.map": "/service-worker.js.map",
-    "static/css/2.150d169a.chunk.css.map": "/static/css/2.150d169a.chunk.css.map",
-    "static/css/main.93fa5a3d.chunk.css.map": "/static/css/main.93fa5a3d.chunk.css.map",
-    "static/js/2.13698548.chunk.js.LICENSE.txt": "/static/js/2.13698548.chunk.js.LICENSE.txt"
+    "main.css": "/nano-tracker-react/static/css/main.93fa5a3d.chunk.css",
+    "main.js": "/nano-tracker-react/static/js/main.7d8e713d.chunk.js",
+    "main.js.map": "/nano-tracker-react/static/js/main.7d8e713d.chunk.js.map",
+    "runtime-main.js": "/nano-tracker-react/static/js/runtime-main.c6ff43e1.js",
+    "runtime-main.js.map": "/nano-tracker-react/static/js/runtime-main.c6ff43e1.js.map",
+    "static/css/2.150d169a.chunk.css": "/nano-tracker-react/static/css/2.150d169a.chunk.css",
+    "static/js/2.13698548.chunk.js": "/nano-tracker-react/static/js/2.13698548.chunk.js",
+    "static/js/2.13698548.chunk.js.map": "/nano-tracker-react/static/js/2.13698548.chunk.js.map",
+    "static/js/3.bbdba5cb.chunk.js": "/nano-tracker-react/static/js/3.bbdba5cb.chunk.js",
+    "static/js/3.bbdba5cb.chunk.js.map": "/nano-tracker-react/static/js/3.bbdba5cb.chunk.js.map",
+    "index.html": "/nano-tracker-react/index.html",
+    "service-worker.js": "/nano-tracker-react/service-worker.js",
+    "service-worker.js.map": "/nano-tracker-react/service-worker.js.map",
+    "static/css/2.150d169a.chunk.css.map": "/nano-tracker-react/static/css/2.150d169a.chunk.css.map",
+    "static/css/main.93fa5a3d.chunk.css.map": "/nano-tracker-react/static/css/main.93fa5a3d.chunk.css.map",
+    "static/js/2.13698548.chunk.js.LICENSE.txt": "/nano-tracker-react/static/js/2.13698548.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.7482b745.js",
+    "static/js/runtime-main.c6ff43e1.js",
     "static/css/2.150d169a.chunk.css",
     "static/js/2.13698548.chunk.js",
     "static/css/main.93fa5a3d.chunk.css",
-    "static/js/main.07397824.chunk.js"
+    "static/js/main.7d8e713d.chunk.js"
   ]
 }

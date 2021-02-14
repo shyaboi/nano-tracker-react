@@ -40,7 +40,7 @@ const HashLine = () => {
   const [windowHeight, setWindowHeight] = useState(50);
   const [prog, setProg] = useState(50);
   const [dropdownOpen, setOpen] = useState(false);
-  const [intervalSet, setInter] = useState(1000);
+  const [intervalSet, setInter] = useState(10000);
 
   const toggle = () => setOpen(!dropdownOpen);
 
@@ -130,7 +130,7 @@ const HashLine = () => {
       <Button onClick={startTick}>Start Updates</Button>
       <Button onClick={stopTick}>Pause Updates</Button>
       <ButtonDropdown direction="up" isOpen={dropdownOpen} toggle={toggle}>
-        <DropdownToggle caret>{intervalSet}</DropdownToggle>
+        <DropdownToggle caret>{intervalSet/1000}Seconds</DropdownToggle>
         <DropdownMenu>
           <DropdownItem value={2} onClick={(e) => changeInter(e)}>2</DropdownItem>
           <DropdownItem value={3} onClick={(e) => changeInter(e)}>3</DropdownItem>

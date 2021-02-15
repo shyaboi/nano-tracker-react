@@ -24,10 +24,10 @@ import {
   Tooltip,
   Legend,
 } from "recharts";
-let gData = [
+let gData:any = [
  
 ];
-let Updater;
+let Updater:any;
 const HashLine = () => {
   const [GgData, setGData] = useState([]);
   const [updateInterval, setUpdateInterval] = useState(0);
@@ -48,20 +48,20 @@ const HashLine = () => {
   });
   window.addEventListener("resize", handleResize);
 
-  const fetchy = async (address) => {
+  const fetchy = async (address:string) => {
     let res = await fetch(address);
     let data = await res.json();
     return data;
   };
-  const beef = (b) => {
+  const beef = (b:any) => {
     return b;
   };
 
   let pData
-  let bal
-  let hashTotal
+  let bal:number
+  let hashTotal:number
   let rigz
-  let w = []
+  let w:any = []
   let updateLine = () => {
     fetchy(`https://api.nanopool.org/v1/eth/balance_hashrate/0x9a024dca12158e8ba0b45bb9d4ae1b1324c38861`).then(async (data) => {
       pData = await data.data;
@@ -109,7 +109,7 @@ const HashLine = () => {
     }
   };
 
-  let changeInter = (e) => {
+  let changeInter = (e:any) => {
       let interVal = e.target.value* 1000
         setInter(interVal)
       clearInterval(Updater)

@@ -104,6 +104,8 @@ const HashLine = () => {
     console.log(interVal)
     setUpdateInterval(0);
     Updater = setInterval(updateLine, interVal);
+    setUpdateInterval(1);
+
     };
 
   return (

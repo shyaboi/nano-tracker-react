@@ -145,7 +145,6 @@ const HashLine = () => {
           data={GgData}
           margin={{ top: 5, right: 20, bottom: 5, left: 0 }}
         >
-          <Line type="monotone" dataKey="Beasty" stroke="#60BCB7" strokeWidth={5}  fill="#82ca9d"/>
           <Area type="monotone" dataKey="cHash" stroke="#60BCB7" strokeWidth={5}  fill="#82ca9d"/>
           <Line type="monotone" dataKey="rHash" stroke="#8E5EA2" strokeWidth={5}  />
           <Line type="monotone" dataKey="aHash" stroke="#262335" strokeWidth={3} />
@@ -156,6 +155,7 @@ const HashLine = () => {
           <Legend />
         </ComposedChart>
       </ResponsiveContainer>
+      <Row>
       <Button onClick={startTick}>Start Updates</Button>
       <Button onClick={stopTick}>Pause Updates</Button>
       <ButtonDropdown direction="up" isOpen={dropdownOpen} toggle={toggle}>
@@ -178,6 +178,7 @@ const HashLine = () => {
      
         </DropdownMenu>
       </ButtonDropdown>
+      </Row>
     </Container>
   );
 };

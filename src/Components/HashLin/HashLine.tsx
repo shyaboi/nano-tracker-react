@@ -121,12 +121,18 @@ const HashLine = () => {
   };
   
   return (
-    <Container fluid>
-      <div className="text-center">
+    <Container fluid> 
+    <Row>
+      <Col className="text-center">
         Current Miner Balance ={prog}ETH | {0.1 - prog} ETH until deposit |{" "}
         {Math.round(prog * 1000)}% there
-      </div>
       <Progress value={prog * 1000} />
+      </Col>
+      </Row>
+      <Row>
+      <Col className="text-center">
+        Worker HashRates
+        </Col></Row>
       <Progress multi>
         <Progress bar striped color ="info"value={workers[0]}>Beasty {workers[0]} M/H </Progress>
         <Progress bar striped color="success" value={workers[1]}>Laptop {workers[1]} M/H </Progress>

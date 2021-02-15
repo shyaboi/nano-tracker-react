@@ -35,6 +35,7 @@ const HashLine = () => {
   const [prog, setProg] = useState(50);
   const [dropdownOpen, setOpen] = useState(false);
   const [intervalSet, setInter] = useState(10000);
+  const [workers, setWorkers] = useState([]);
 
   const toggle = () => setOpen(!dropdownOpen);
 
@@ -60,6 +61,7 @@ const HashLine = () => {
   let bal
   let hashTotal
   let rigz
+  let w = []
   let updateLine = () => {
     fetchy(`https://api.nanopool.org/v1/eth/balance_hashrate/0x9a024dca12158e8ba0b45bb9d4ae1b1324c38861`).then(async (data) => {
       pData = await data.data;
@@ -68,7 +70,11 @@ const HashLine = () => {
     });
     fetchy(`https://api.nanopool.org/v1/eth/reportedhashrates/0x9a024dca12158e8ba0b45bb9d4ae1b1324c38861`).then(async (data) => {
       rigz = data.data
-      console.log(rigz)
+      w = []
+      for (const i of rigz) {
+        w.push(i.hashrate)
+      }
+      setWorkers(w)
   })
 
     fetchy(`https://api.nanopool.org/v1/eth/reportedhashrate/0x9a024dca12158e8ba0b45bb9d4ae1b1324c38861`).then(async (data) => {
@@ -76,7 +82,7 @@ const HashLine = () => {
     console.log(rHash)
     let aHash = (hashTotal + rHash) / 2
     gData.push({ name: hashTotal, cHash: hashTotal, rHash: rHash, aHash:aHash});
-    console.log(gData)
+    // console.log(gData)
     setProg(bal);
     let dataG = gData.map(beef);
     if (dataG.length > 6) {
@@ -122,22 +128,21 @@ const HashLine = () => {
       </div>
       <Progress value={prog * 1000} />
       <Progress multi>
-        <Progress bar value="15">Meh</Progress>
-        <Progress bar color="success" value="30">Wow!</Progress>
-        <Progress bar color="info" value="25">Cool</Progress>
-        <Progress bar color="warning" value="20">20%</Progress>
-        <Progress bar color="danger" value="5">!!</Progress>
+        <Progress bar striped color ="info"value={workers[0]}>Beasty {workers[0]} M/H </Progress>
+        <Progress bar striped color="success" value={workers[1]}>Laptop {workers[1]} M/H </Progress>
+        <Progress bar striped value={workers[2]}>MiniBoi {workers[2]} M/H </Progress>
+        <Progress bar striped color="warning" value={workers[3]}>Ol' Miney {workers[3]} M/H</Progress>
+        <Progress bar striped color="danger" value={workers[4]}>Ryzern {workers[4]} M/H</Progress>
       </Progress>
       <ResponsiveContainer width="100%" height={windowHeight}>
         <ComposedChart
           data={GgData}
           margin={{ top: 5, right: 20, bottom: 5, left: 0 }}
         >
-          <Area type="monotone" dataKey="Beasty" stroke="#60BCB7" strokeWidth={5}  fill="#82ca9d"/>
+          <Line type="monotone" dataKey="Beasty" stroke="#60BCB7" strokeWidth={5}  fill="#82ca9d"/>
           <Area type="monotone" dataKey="cHash" stroke="#60BCB7" strokeWidth={5}  fill="#82ca9d"/>
           <Line type="monotone" dataKey="rHash" stroke="#8E5EA2" strokeWidth={5}  />
           <Line type="monotone" dataKey="aHash" stroke="#262335" strokeWidth={3} />
-          <Bar dataKey="bHash" barSize={20} fill="#413ea0" />
           <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
           <XAxis dataKey="name" />
           <YAxis type="number"/>

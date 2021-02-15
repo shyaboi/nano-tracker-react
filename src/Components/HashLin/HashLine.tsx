@@ -121,12 +121,18 @@ const HashLine = () => {
   };
   
   return (
-    <Container fluid>
-      <div className="text-center">
+    <Container fluid> 
+    <Row>
+      <Col className="text-center">
         Current Miner Balance ={prog}ETH | {0.1 - prog} ETH until deposit |{" "}
         {Math.round(prog * 1000)}% there
-      </div>
       <Progress value={prog * 1000} />
+      </Col>
+      </Row>
+      <Row>
+      <Col className="text-center">
+        Worker HashRates
+        </Col></Row>
       <Progress multi>
         <Progress bar striped color ="info"value={workers[0]}>Beasty {workers[0]} M/H </Progress>
         <Progress bar striped color="success" value={workers[1]}>Laptop {workers[1]} M/H </Progress>
@@ -139,7 +145,6 @@ const HashLine = () => {
           data={GgData}
           margin={{ top: 5, right: 20, bottom: 5, left: 0 }}
         >
-          <Line type="monotone" dataKey="Beasty" stroke="#60BCB7" strokeWidth={5}  fill="#82ca9d"/>
           <Area type="monotone" dataKey="cHash" stroke="#60BCB7" strokeWidth={5}  fill="#82ca9d"/>
           <Line type="monotone" dataKey="rHash" stroke="#8E5EA2" strokeWidth={5}  />
           <Line type="monotone" dataKey="aHash" stroke="#262335" strokeWidth={3} />
@@ -150,6 +155,7 @@ const HashLine = () => {
           <Legend />
         </ComposedChart>
       </ResponsiveContainer>
+      <Row>
       <Button onClick={startTick}>Start Updates</Button>
       <Button onClick={stopTick}>Pause Updates</Button>
       <ButtonDropdown direction="up" isOpen={dropdownOpen} toggle={toggle}>
@@ -172,6 +178,7 @@ const HashLine = () => {
      
         </DropdownMenu>
       </ButtonDropdown>
+      </Row>
     </Container>
   );
 };

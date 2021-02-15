@@ -16,6 +16,7 @@ import {
   ComposedChart,
   LineChart,
   Area,
+  Bar,
   Line,
   CartesianGrid,
   XAxis,
@@ -24,14 +25,7 @@ import {
   Legend,
 } from "recharts";
 let gData = [
-  { name: "b", uv: 200, pv: 200 },
-  { name: "b", uv: 200, pv: 200 },
-  { name: "b", uv: 200, pv: 200 },
-  { name: "b", uv: 200, pv: 200 },
-  { name: "b", uv: 200, pv: 200 },
-  { name: "b", uv: 200, pv: 200 },
-  { name: "b", uv: 200, pv: 200 },
-  { name: "b", uv: 200, pv: 200 },
+ 
 ];
 let Updater;
 const HashLine = () => {
@@ -45,7 +39,7 @@ const HashLine = () => {
   const toggle = () => setOpen(!dropdownOpen);
 
   function handleResize() {
-    setWindowHeight(window.innerHeight - 100);
+    setWindowHeight(window.innerHeight - 200);
   }
   useEffect(() => {
     setGData(gData);
@@ -54,31 +48,43 @@ const HashLine = () => {
   window.addEventListener("resize", handleResize);
 
   const fetchy = async (address) => {
-    let res = await fetch(
-      `https://api.nanopool.org/v1/eth/balance_hashrate/${address}`
-    );
+    let res = await fetch(address);
     let data = await res.json();
     return data;
   };
   const beef = (b) => {
     return b;
   };
-  console.log();
+
+  let pData
+  let bal
+  let hashTotal
+  let rigz
   let updateLine = () => {
-    fetchy("0x9a024dca12158e8ba0b45bb9d4ae1b1324c38861").then(async (data) => {
-      let pData = await data.data;
-      let bal = await pData.balance;
-      let hashTotal = await pData.hashrate;
-      console.log(hashTotal);
-      gData.push({ name: hashTotal, uv: hashTotal, pv: 150 });
-      setProg(bal);
-      let dataG = gData.map(beef);
-      if (dataG.length > 8) {
-        gData.shift();
-        setGData(dataG);
-      }
-      setGData(dataG);
+    fetchy(`https://api.nanopool.org/v1/eth/balance_hashrate/0x9a024dca12158e8ba0b45bb9d4ae1b1324c38861`).then(async (data) => {
+      pData = await data.data;
+      bal = await pData.balance;
+      hashTotal = await pData.hashrate;
     });
+    fetchy(`https://api.nanopool.org/v1/eth/reportedhashrates/0x9a024dca12158e8ba0b45bb9d4ae1b1324c38861`).then(async (data) => {
+      rigz = data.data
+      console.log(rigz)
+  })
+
+    fetchy(`https://api.nanopool.org/v1/eth/reportedhashrate/0x9a024dca12158e8ba0b45bb9d4ae1b1324c38861`).then(async (data) => {
+    let rHash = await data.data
+    console.log(rHash)
+    let aHash = (hashTotal + rHash) / 2
+    gData.push({ name: hashTotal, cHash: hashTotal, rHash: rHash, aHash:aHash});
+    console.log(gData)
+    setProg(bal);
+    let dataG = gData.map(beef);
+    if (dataG.length > 6) {
+      gData.shift();
+      setGData(dataG);
+    }
+    setGData(dataG);
+  })
   };
 
   let startTick = () => {
@@ -105,30 +111,40 @@ const HashLine = () => {
     setUpdateInterval(0);
     Updater = setInterval(updateLine, interVal);
     setUpdateInterval(1);
-
-    };
-
+    
+  };
+  
   return (
     <Container fluid>
       <div className="text-center">
-        Current bal ={prog}ETH | {0.1 - prog} ETH until deposit |{" "}
+        Current Miner Balance ={prog}ETH | {0.1 - prog} ETH until deposit |{" "}
         {Math.round(prog * 1000)}% there
       </div>
       <Progress value={prog * 1000} />
+      <Progress multi>
+        <Progress bar value="15">Meh</Progress>
+        <Progress bar color="success" value="30">Wow!</Progress>
+        <Progress bar color="info" value="25">Cool</Progress>
+        <Progress bar color="warning" value="20">20%</Progress>
+        <Progress bar color="danger" value="5">!!</Progress>
+      </Progress>
       <ResponsiveContainer width="100%" height={windowHeight}>
         <ComposedChart
           data={GgData}
           margin={{ top: 5, right: 20, bottom: 5, left: 0 }}
         >
-          <Line type="monotone" dataKey="uv" stroke="#8884d8" fill="#82ca9d" />
-          <Line type="monotone" dataKey="pv" stroke="#8884d8" />
+          <Area type="monotone" dataKey="Beasty" stroke="#60BCB7" strokeWidth={5}  fill="#82ca9d"/>
+          <Area type="monotone" dataKey="cHash" stroke="#60BCB7" strokeWidth={5}  fill="#82ca9d"/>
+          <Line type="monotone" dataKey="rHash" stroke="#8E5EA2" strokeWidth={5}  />
+          <Line type="monotone" dataKey="aHash" stroke="#262335" strokeWidth={3} />
+          <Bar dataKey="bHash" barSize={20} fill="#413ea0" />
           <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
           <XAxis dataKey="name" />
-          <YAxis />
+          <YAxis type="number"/>
           <Tooltip />
+          <Legend />
         </ComposedChart>
       </ResponsiveContainer>
-      <Legend />
       <Button onClick={startTick}>Start Updates</Button>
       <Button onClick={stopTick}>Pause Updates</Button>
       <ButtonDropdown direction="up" isOpen={dropdownOpen} toggle={toggle}>
@@ -138,8 +154,17 @@ const HashLine = () => {
           <DropdownItem value={3} onClick={(e) => changeInter(e)}>3</DropdownItem>
           <DropdownItem value={4} onClick={(e) => changeInter(e)}>4</DropdownItem>
           <DropdownItem value={5} onClick={(e) => changeInter(e)}>5</DropdownItem>
-          <DropdownItem value={6} onClick={(e) => changeInter(e)}>6</DropdownItem>
-          <DropdownItem value={7} onClick={(e) => changeInter(e)}>7</DropdownItem>
+          <DropdownItem value={10} onClick={(e) => changeInter(e)}>10</DropdownItem>
+          <DropdownItem value={20} onClick={(e) => changeInter(e)}>20</DropdownItem>
+          <DropdownItem value={25} onClick={(e) => changeInter(e)}>25</DropdownItem>
+          <DropdownItem value={30} onClick={(e) => changeInter(e)}>30</DropdownItem>
+          <DropdownItem value={35} onClick={(e) => changeInter(e)}>35</DropdownItem>
+          <DropdownItem value={40} onClick={(e) => changeInter(e)}>40</DropdownItem>
+          <DropdownItem value={45} onClick={(e) => changeInter(e)}>45</DropdownItem>
+          <DropdownItem value={50} onClick={(e) => changeInter(e)}>50</DropdownItem>
+          <DropdownItem value={55} onClick={(e) => changeInter(e)}>55</DropdownItem>
+          <DropdownItem value={60} onClick={(e) => changeInter(e)}>60</DropdownItem>
+     
         </DropdownMenu>
       </ButtonDropdown>
     </Container>

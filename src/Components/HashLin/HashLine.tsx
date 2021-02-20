@@ -1,5 +1,6 @@
-import { Hash } from "crypto";
+//import react
 import React, { useEffect, useState } from "react";
+//import componenets from react strap
 import {
   Container,
   Row,
@@ -10,7 +11,9 @@ import {
   DropdownMenu,
   DropdownItem,
 } from "reactstrap";
+//progress bar from react strap
 import { Progress } from "reactstrap";
+//importing componenets from rrecharts
 import {
   ResponsiveContainer,
   ComposedChart,
@@ -24,21 +27,30 @@ import {
   Tooltip,
   Legend,
 } from "recharts";
-let gData:any = [
- 
-];
+//make global gData array var
+let gData:any = [];
+//declare updatrer
 let Updater:any;
+//initiate hashline function
 const HashLine = () => {
+  //setting states
+  //set globaldata
   const [GgData, setGData] = useState([]);
+  //update interval t/f state
   const [updateInterval, setUpdateInterval] = useState(0);
+  //windows height state
   const [windowHeight, setWindowHeight] = useState(50);
+  //progres bar state
   const [prog, setProg] = useState(50);
+  //dropdown state
   const [dropdownOpen, setOpen] = useState(false);
+  //interval state
   const [intervalSet, setInter] = useState(10000);
+  //workers state array
   const [workers, setWorkers] = useState([]);
-
+//dropdown toggle
   const toggle = () => setOpen(!dropdownOpen);
-
+//resizeeing the windows based on the live window height
   function handleResize() {
     setWindowHeight(window.innerHeight - 200);
   }
@@ -48,74 +60,104 @@ const HashLine = () => {
   });
   window.addEventListener("resize", handleResize);
 
+  //setting up async fetch function for 
   const fetchy = async (address:string) => {
     let res = await fetch(address);
     let data = await res.json();
     return data;
   };
+  //setup function to return its param(setup later for mutated map)
   const beef = (b:any) => {
     return b;
   };
-
+//setting up global vars for the update line func to retun to for easy parsing
   let pData
   let bal:number
   let hashTotal:number
   let rigz
   let w:any = []
+
+  //setting up update link function
   let updateLine = () => {
+    //fetch to nano api for bal and hash
     fetchy(`https://api.nanopool.org/v1/eth/balance_hashrate/0x9a024dca12158e8ba0b45bb9d4ae1b1324c38861`).then(async (data) => {
+      //parse data  and assign vars async await
       pData = await data.data;
       bal = await pData.balance;
       hashTotal = await pData.hashrate;
     });
+    //fetch to nano api for reported hasrates
     fetchy(`https://api.nanopool.org/v1/eth/reportedhashrates/0x9a024dca12158e8ba0b45bb9d4ae1b1324c38861`).then(async (data) => {
+      //parse data  and assign vars async await
       rigz = data.data
       w = []
+      //for loop through data to push to workers state
       for (const i of rigz) {
         w.push(i.hashrate)
       }
       setWorkers(w)
   })
-
+    //fetch to nano api for reported hasrates
     fetchy(`https://api.nanopool.org/v1/eth/reportedhashrate/0x9a024dca12158e8ba0b45bb9d4ae1b1324c38861`).then(async (data) => {
+      //parse data  and assign vars async await
     let rHash = await data.data
     console.log(rHash)
     let aHash = (hashTotal + rHash) / 2
+    //push async await data to gData array
     gData.push({ name: hashTotal, cHash: hashTotal, rHash: rHash, aHash:aHash});
-    // console.log(gData)
+    //set progress bar state to bal
     setProg(bal);
+    //let data = map of gData
     let dataG = gData.map(beef);
+    //limit the number of datapoints for the chart to 6
     if (dataG.length > 6) {
+      //remove the 1st el in the array
       gData.shift();
+      //set the g data state
       setGData(dataG);
     }
+      //set the g data state
     setGData(dataG);
   })
   };
 
+
+  //start the inteval button  tick function
   let startTick = () => {
     if (!updateInterval) {
       console.log("clicked");
+      //name the interval and start updateline funtion
       Updater = setInterval(updateLine, intervalSet);
+      //setinterval state to true
       setUpdateInterval(1);
     }
   };
+  //stop interval button funtion
   let stopTick = () => {
-    console.log("clicked pause");
+console.log("clicked pause");
+//if the update interval is true
     if (updateInterval) {
+      //clear the interval
       console.log("pause");
       clearInterval(Updater);
+      //setinterval state to false
       setUpdateInterval(0);
     }
   };
-
+//change interval fucntion based on dropdown
   let changeInter = (e:any) => {
+    //declare interval is the dropdown target *1000
       let interVal = e.target.value* 1000
+      //set interval state to that val
         setInter(interVal)
+      //clear the interval
       clearInterval(Updater)
     console.log(interVal)
+    //set interval state to false
     setUpdateInterval(0);
+    //set interval to named Updaters and run updateline set to interVal
     Updater = setInterval(updateLine, interVal);
+    //set interval state to true
     setUpdateInterval(1);
     
   };

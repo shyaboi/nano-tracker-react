@@ -80,14 +80,14 @@ const HashLine = () => {
   //setting up update link function
   let updateLine = () => {
     //fetch to nano api for bal and hash
-    fetchy(`https://api.nanopool.org/v1/eth/balance_hashrate/0x9a024dca12158e8ba0b45bb9d4ae1b1324c38861`).then(async (data) => {
+    fetchy(`https://api.nanopool.org/v1/eth/balance_hashrate/0xcf0dfcd5d4d2c8a18b9f06289e99363bba0b1f98`).then(async (data) => {
       //parse data  and assign vars async await
       pData = await data.data;
       bal = await pData.balance;
       hashTotal = await pData.hashrate;
     });
     //fetch to nano api for reported hasrates
-    fetchy(`https://api.nanopool.org/v1/eth/reportedhashrates/0x9a024dca12158e8ba0b45bb9d4ae1b1324c38861`).then(async (data) => {
+    fetchy(`https://api.nanopool.org/v1/eth/reportedhashrates/0xcf0dfcd5d4d2c8a18b9f06289e99363bba0b1f98`).then(async (data) => {
       //parse data  and assign vars async await
       rigz = data.data
       w = []
@@ -98,7 +98,7 @@ const HashLine = () => {
       setWorkers(w)
   })
     //fetch to nano api for reported hasrates
-    fetchy(`https://api.nanopool.org/v1/eth/reportedhashrate/0x9a024dca12158e8ba0b45bb9d4ae1b1324c38861`).then(async (data) => {
+    fetchy(`https://api.nanopool.org/v1/eth/reportedhashrate/0xcf0dfcd5d4d2c8a18b9f06289e99363bba0b1f98`).then(async (data) => {
       //parse data  and assign vars async await
     let rHash = await data.data
     console.log(rHash)
